@@ -42,15 +42,16 @@ export default function TextForm(props) {
         {/* {{}} inside the double carly bracke, object is defined in js*/}
         {/* value={text} used to get values from const [text, setText] adn onChange is required to write in textarea and mb-3, mx-2, my-3 all are used for spacing,padding and all */}
         </div>
-        <button className="btn btn-primary mx-2" onClick={handleUPClick}>Convert to Uppercase</button>
-        <button className="btn btn-primary mx-2" onClick={handleLoClick}>Convert to Lowercase</button>
-        <button className="btn btn-primary mx-2" onClick={handleclearClick}>Clear text</button>
+        <button disabled={text.length===0} className="btn btn-primary mx-2" onClick={handleUPClick}>Convert to Uppercase</button>
+        <button disabled={text.length===0} className="btn btn-primary mx-2" onClick={handleLoClick}>Convert to Lowercase</button>
+        <button disabled={text.length===0} className="btn btn-primary mx-2" onClick={handleclearClick}>Clear text</button>
+        {/* disable={text.length===0} used to disable the button when textbox is empty */}
     </div>
     <div className="container my-3" style={{color: props.mode==='dark'?'white':'#042743'}}>
       <h1>Your text summary</h1>
-      <p>{text.split(" ").length} words and {text.length} characters</p>
-      {/* text.split(" ").length means split the word with space and coiunt the number of words and text.legth is used for number of characters in text */}
-      <p>{0.008 * text.split(" ").length} Minutes to read</p>
+      <p>{text.split(/\s+/).filter((element)=>{return element.length!==0}).length} words and {text.length} characters</p>
+      {/* text.split(" ").filter((element)=>{return element.length!==0}).length means split the word with space and coiunt the number of words and space is not count as word by the use of filter function and text.legth is used for number of characters in text and \s+ is used for whitespace including more than one line or next line*/}
+      <p>{0.008 * text.split(" ").filter((element)=>{return element.length!==0}).length} Minutes to read</p>
       {/* 0.008 is time to read one word so to count the total  inutes to read the text is 0.008*text.split(" ").length is required */}
       <h2>Preview</h2>
       <p>{text.length>0?text:"Enter something to preview to here"}</p> 
